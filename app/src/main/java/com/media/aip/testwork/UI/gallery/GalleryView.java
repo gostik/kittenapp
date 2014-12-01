@@ -15,9 +15,12 @@ import com.media.aip.testwork.R;
 import com.media.aip.testwork.TestApplication;
 import com.media.aip.testwork.UI.BetterViewAnimator;
 import com.media.aip.testwork.data.IImageGenerator;
+import com.media.aip.testwork.data.LastImagesProvider;
+import com.media.aip.testwork.data.NetworkUtils;
 import com.media.aip.testwork.models.Image;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -38,6 +41,9 @@ public class GalleryView extends BetterViewAnimator {
 
     @Inject
     Picasso picasso;
+
+    @Inject
+    LastImagesProvider lastImagesProvider;
 
     private Subscription request;
 
@@ -108,7 +114,9 @@ public class GalleryView extends BetterViewAnimator {
             @Override
             public void onClick(View v) {
                 galleryView.setSelection(0);
-                refreshImages();
+                List<Image> imageList = imageGenerator.generateImages(50);
+                lastImagesProvider.save(imageList);
+                refreshWithImages(imageList);
                 dialog.dismiss();
             }
         });
@@ -130,13 +138,21 @@ public class GalleryView extends BetterViewAnimator {
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
 
-        refreshImages();
+        List<Image> imageList = new ArrayList<Image>();
+        if (NetworkUtils.haveInternet(getContext())) {
+            imageList = imageGenerator.generateImages(50);
+            lastImagesProvider.save(imageList);
+        } else {
+            imageList = lastImagesProvider.load();
+        }
+
+        refreshWithImages(imageList);
+
     }
 
-    private void refreshImages() {
-        List<Image> images = imageGenerator.generateImages(50);
+    private void refreshWithImages(List<Image> imageList) {
 
-        adapter.replaceWith(images);
+        adapter.replaceWith(imageList);
 
         setDisplayedChildId(R.id.gallery_grid);
     }

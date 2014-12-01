@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.SharedPreferences;
 import android.net.Uri;
 
+import com.google.gson.Gson;
 import com.media.aip.testwork.API.ApiModule;
 import com.squareup.okhttp.HttpResponseCache;
 import com.squareup.okhttp.OkHttpClient;
@@ -28,7 +29,7 @@ import static android.content.Context.MODE_PRIVATE;
 * APIModule combines all modules which perform DAL functionality + DB logic
 * */
 @Module(
-    includes = ApiModule.class,
+    includes = {ApiModule.class},
     complete = false,
     library = true
 )
@@ -67,4 +68,14 @@ public final class DataModule {
 
     return client;
   }
+
+    @Provides @Singleton
+    Gson provideGson(Application app) {
+        return new Gson();
+    }
+
+    @Provides @Singleton
+    LastImagesProvider provideLastImagesProvider(Application application) {
+        return new LastImagesProvider(application.getApplicationContext());
+    }
 }
