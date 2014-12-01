@@ -7,6 +7,9 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 
+/*
+* Module which combine UI modules
+* */
 @Module(
     injects = {
         MainActivity.class,

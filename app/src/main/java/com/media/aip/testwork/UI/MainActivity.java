@@ -14,9 +14,6 @@ import javax.inject.Inject;
  */
 public class MainActivity extends Activity {
 
-
-
-
     @Inject
     AppContainer appContainer;
 
