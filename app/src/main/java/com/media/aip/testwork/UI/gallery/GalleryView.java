@@ -25,6 +25,7 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import rx.Subscription;
+
 /**
  * Created by user_sca on 01.12.2014.
  */
@@ -107,7 +108,7 @@ public class GalleryView extends BetterViewAnimator {
             @Override
             public void onClick(View v) {
                 galleryView.setSelection(0);
-
+                refreshImages();
                 dialog.dismiss();
             }
         });
@@ -129,6 +130,10 @@ public class GalleryView extends BetterViewAnimator {
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
 
+        refreshImages();
+    }
+
+    private void refreshImages() {
         List<Image> images = imageGenerator.generateImages(50);
 
         adapter.replaceWith(images);
