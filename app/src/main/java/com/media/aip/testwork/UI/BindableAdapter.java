@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 /**
  * Created by user_sca on 01.12.2014.
+ * Adapter for displaying images in gallery
  */
 public abstract class BindableAdapter<T> extends BaseAdapter {
   private final Context context;

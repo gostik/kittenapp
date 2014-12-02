@@ -24,10 +24,8 @@ import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by user_sca on 01.12.2014.
+ * APIModule combines all modules which perform DAL functionality + DB logic
  */
-/*
-* APIModule combines all modules which perform DAL functionality + DB logic
-* */
 @Module(
     includes = {ApiModule.class},
     complete = false,

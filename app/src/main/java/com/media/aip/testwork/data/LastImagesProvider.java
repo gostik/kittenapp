@@ -15,6 +15,7 @@ import timber.log.Timber;
 
 /**
  * Created by user_sca on 05.11.2014.
+ * Provider for storing last images in sharedPreferences.
  */
 public class LastImagesProvider {
 
@@ -33,6 +34,9 @@ public class LastImagesProvider {
 //        return this;
 //    }
 
+    /*
+    * Load last images
+    * */
     public ArrayList<Image> load() {
         String s = AccessPreferences.get(applicationContext, LAST_IMAGES, "");
 
@@ -48,6 +52,7 @@ public class LastImagesProvider {
         return images;
     }
 
+    /*Save last images*/
     public void save(List<Image> images) {
 
         AccessPreferences.commit(applicationContext, LAST_IMAGES, gson.toJson(images).toString());
